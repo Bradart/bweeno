@@ -10,6 +10,15 @@ const int buttonPin = 2;
 //The pin for the photocell that I'm pretty sure doesn't get used in this project. Cool.
 const int cellPin = 0;
 
+
+
+/*
+ I'm adding this comment purely to try and commit it to the git without fucking anything up. LETS SEE IF I FUCK EVERYTHING UP OH GODDDDDDDD
+ */
+
+
+
+
 //initializing the variables that vary
 
 //the state of the button, obvi
