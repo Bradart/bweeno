@@ -1,8 +1,42 @@
-void setup() {
-  // Nothing Yet
+/* This initial sketch will probably not be very well coded, if I'm being honest. I'm currently wrangling a four-year-old and 
+   watching a particularly interesting episode of Ladybug and Cat Noire. This is just a rough sketch so that I don't feel like I
+   wasted this entire day not doing anything remotely productive. Eat broccoli.
 
+
+   Also, this was coded specifically for use on a Mega 2560 board but, with only 3 PWM pins in use, an uno should doe just fine IF YOU'RE A POOR PERSON GOD YOU DISGUST ME
+ */
+const int redPot = 0;   //The pin for the potentiometer controlling the red level
+const int greenPot = 1; //Same for green
+const int bluePot = 2; //and for blue
+
+const int fetRed = 2;   //pin for the digital PWM output pin for red
+const int fetGreen = 3; //same for green
+const int fetBlue = 4;  //same for blue
+
+void setup() {
+  //pinmodes. hooray.
+  pinMode(redPot, INPUT);
+  pinMode(greenPot, INPUT);
+  pinMode(bluePot, INPUT);
+
+  pinMode(fetRed, OUTPUT);
+  pinMode(fetGreen, OUTPUT);
+  pinMode(fetBlue, OUTPUT);
 }
 
 void loop() {
-  // this will be cool in a day or two
+  //gotta get those analogue levels to turn them into delicious, free-range PWM
+  int redLevAn = analogRead(redPot);
+  int greenLevAn = analogRead(greenPot);
+  int blueLevAn = analogRead(bluePot);
+
+  //annnnnnnnnd let's convert them. ez pz
+  int redLev = redLevAn / 4;
+  int greenLev = greenLevAn / 4;
+  int blueLev = blueLevAn / 4;
+
+  //now we make that shit blast raw power directly to the LEDs because FUCK IT
+  analogWrite(fetRed, redLev);
+  analogWrite(fetGreen, greenLev);
+  analogWrite(fetBlue, blueLev);  
 }
