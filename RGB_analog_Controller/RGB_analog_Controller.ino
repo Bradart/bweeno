@@ -3,8 +3,17 @@
    wasted this entire day not doing anything remotely productive. Eat broccoli.
 
 
-   Also, this was coded specifically for use on a Mega 2560 board but, with only 3 PWM pins in use, an uno should doe just fine IF YOU'RE A POOR PERSON GOD YOU DISGUST ME
+   Also, this was coded specifically for use on a Mega 2560 board but, with only 3 PWM pins in use, an uno should do just fine 
+   IF YOU'RE A POOR PERSON GOD YOU DISGUST ME
  */
+
+ /* ADDENDUM: Yeah, it's for the Mega 2560. That board, however, is not mega enough to power the LEDs so here's more about what's happening here ---
+
+    3 N-Channel MOSFETs (IRLB8721PBF, TO-220 package) with the gate pins hooked up to the bweeno. bweeno=arduino. Get over it.
+    1 12V2A power supply, positive to the LED strip positive rail, negative common with the bweeno ground. Don't let that shit float, son.
+    Standard 12V, 4-conductor LED strip. I thoroughly enjoy how simple the logic of these is and you can power a fuckload of them
+      with this setup. 
+  */
 const int redPot = 0;   //The pin for the potentiometer controlling the red level
 const int greenPot = 1; //Same for green
 const int bluePot = 2; //and for blue
@@ -30,7 +39,7 @@ void loop() {
   int greenLevAn = analogRead(greenPot);
   int blueLevAn = analogRead(bluePot);
 
-  //annnnnnnnnd let's convert them. ez pz
+  //annnnnnnnnd let's convert them to PWM. ez pz
   int redLev = redLevAn / 4;
   int greenLev = greenLevAn / 4;
   int blueLev = blueLevAn / 4;
