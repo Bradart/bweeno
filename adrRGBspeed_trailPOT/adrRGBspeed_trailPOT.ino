@@ -10,9 +10,11 @@
 #define CLOCK_PIN 13
 
 #define POT A0
-int sub = 1;
+int sub = 3;
 // Define the array of leds
 CRGB leds[NUM_LEDS];
+
+int light = 0;
 
 void setup() { 
   //Serial.begin(115200);
@@ -47,7 +49,7 @@ void setup() {
 }
 void fadeall() { 
   int dial = analogRead(POT);
-  int tail = map(dial, 0, 1023, 150, 250);
+  int tail = map(dial, 0, 1023, 220, 250);
   for(int i = 0; i < NUM_LEDS; i++) { 
 leds[i].nscale8(tail); 
 
@@ -55,10 +57,10 @@ leds[i].nscale8(tail);
 void loop() { 
   // Turn the LED on, then pause
 int dial = analogRead(POT);
-int light = map(dial, 0, 1023, 0, 60);
+
 int tail = map(dial, 0, 1023, 0, 255);
 
-static uint8_t hue = 0;
+static uint8_t hue = 70;
 
 //FastLED.clear();
   for(int i = 0; i < NUM_LEDS; i++){
@@ -76,10 +78,21 @@ static uint8_t hue = 0;
   delay(light);
   fadeall();
   dial = analogRead(POT);
-  light = map(dial, 0, 1023, 0, 50);
-  }
+  light = map(dial, 0, 1023, 10, 200);
 
-hue = hue + 20;
+
+  
+
+  hue = hue + sub;
+
+  if(hue >= 255){
+    sub = -sub;
+  }
+  else if(hue <= 0){
+    sub = -sub;
+  }
+  
+  }
 
   for(int i = NUM_LEDS - 1; i >= 0; i--){
   //FastLED.clear();
@@ -91,12 +104,22 @@ hue = hue + 20;
  
   FastLED.show();
   //leds[i] = CRGB::Black;
-  delay(light / 5);
+  delay(light);
   //FastLED.show();
   fadeall();
   dial = analogRead(POT);
-  light = map(dial, 0, 1023, 0, 60);
+  light = map(dial, 0, 1023, 10, 200);
   //leds[i] = CHSV(hue++, 255, 255);
+
+  hue = hue + sub;
+
+  if(hue >= 255){
+    sub = -sub;
+  }
+  else if(hue <= 0){
+    sub = -sub;
+  }
+
   }
 
 
