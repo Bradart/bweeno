@@ -14,6 +14,8 @@
     Standard 12V, 4-conductor LED strip. I thoroughly enjoy how simple the logic of these is and you can power a fuckload of them
       with this setup. 
   */
+
+  //TESSSSSSSSttttttt
 const int redPot = 0;   //The pin for the potentiometer controlling the red level
 const int greenPot = 1; //Same for green
 const int bluePot = 2; //and for blue
