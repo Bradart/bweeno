@@ -15,13 +15,20 @@
       with this setup. 
   */
 
-const int redPot = 0;   //The pin for the potentiometer controlling the red level
-const int greenPot = 1; //Same for green
-const int bluePot = 2; //and for blue
+const int redPot = A0;   //The pin for the potentiometer controlling the red level
+const int greenPot = A1; //Same for green
+const int bluePot = A2; //and for blue
 
 const int fetRed = 2;   //pin for the digital PWM output pin for red
 const int fetGreen = 3; //same for green
 const int fetBlue = 4;  //same for blue
+
+//I'm adding indicators because what are you my dad step off old man I'm busy
+const int redInd = 5;
+const int greenInd = 6;
+const int blueInd = 7;
+
+
 
 void setup() {
   //pinmodes. hooray.
@@ -32,6 +39,12 @@ void setup() {
   pinMode(fetRed, OUTPUT);
   pinMode(fetGreen, OUTPUT);
   pinMode(fetBlue, OUTPUT);
+
+  pinMode(redInd, OUTPUT);
+  pinMode(greenInd, OUTPUT);
+  pinMode(blueInd, OUTPUT);
+
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -42,11 +55,42 @@ void loop() {
 
   //annnnnnnnnd let's convert them to PWM. ez pz
   int redLev = redLevAn / 4;
-  int greenLev = greenLevAn / 4;
+  int greenLev = greenLevAn /4;
   int blueLev = blueLevAn / 4;
+
+  //compensating for the fact that 255 doesn't divide evenly into 1024
+  if(redLev < 5){
+    redLev = 0;  
+  }
+
+  if(greenLev < 5){
+    greenLev = 0;
+  }
+
+  if(blueLev < 5){
+    blueLev = 0;
+  }
 
   //now we make that shit blast raw power directly to the LEDs because FUCK IT
   analogWrite(fetRed, redLev);
   analogWrite(fetGreen, greenLev);
   analogWrite(fetBlue, blueLev);  
+
+  //the indicators operating on the same pwm as the controller mosfets
+  analogWrite(redInd, redLev);
+  analogWrite(greenInd, greenLev);
+  analogWrite(blueInd, blueLev);  
+
+  delay(50);
+  
+  Serial.print("red:");
+  Serial.print(redLev);
+  Serial.print('\n');
+  Serial.print("green:");
+  Serial.print(greenLev);
+  Serial.print('\n');
+  Serial.print("blue:");
+  Serial.print(blueLev);
+  Serial.print('\n');
+  Serial.print('\n');
 }
