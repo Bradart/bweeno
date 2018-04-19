@@ -10,7 +10,7 @@
 #define CLOCK_PIN 13
 
 #define POT A0
-int sub = 3;
+int sub = 5;
 // Define the array of leds
 CRGB leds[NUM_LEDS];
 
@@ -24,7 +24,7 @@ void setup() {
       // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-       FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
+       FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   	  // FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
       // FastLED.addLeds<APA104, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
@@ -60,9 +60,11 @@ int dial = analogRead(POT);
 
 int tail = map(dial, 0, 1023, 0, 255);
 
-static uint8_t hue = 70;
+static uint8_t hue = 0;
 
 //FastLED.clear();
+  
+  
   for(int i = 0; i < NUM_LEDS; i++){
   //FastLED.clear();
   //leds[i] = CHSV(hue = hue + 5, 255, 255);
@@ -71,6 +73,7 @@ static uint8_t hue = 70;
   //leds[i+1] = CRGB::Blue;
 
   leds[i] = CHSV(hue, 255, 255);
+  
   FastLED.show();
   //leds[i] = CRGB::Black;
   //delay(10);
@@ -78,14 +81,14 @@ static uint8_t hue = 70;
   delay(light);
   fadeall();
   dial = analogRead(POT);
-  light = map(dial, 0, 1023, 10, 200);
+  light = map(dial, 0, 1023, 5, 100);
 
 
   
 
   hue = hue + sub;
 
-  if(hue >= 255){
+  if(hue >= 64){
     sub = -sub;
   }
   else if(hue <= 0){
@@ -97,6 +100,7 @@ static uint8_t hue = 70;
   for(int i = NUM_LEDS - 1; i >= 0; i--){
   //FastLED.clear();
   leds[i] = CHSV(hue, 255, 255);
+  
   //leds[i-1] = CRGB::Blue;
   //leds[i] = CRGB::Green;
   //leds[i+1] = CRGB::Blue;
@@ -113,7 +117,7 @@ static uint8_t hue = 70;
 
   hue = hue + sub;
 
-  if(hue >= 255){
+  if(hue >= 64){
     sub = -sub;
   }
   else if(hue <= 0){
