@@ -10,7 +10,7 @@
 #define CLOCK_PIN 13
 
 #define POT A0
-int sub = 5;
+int sub = 1;
 // Define the array of leds
 CRGB leds[NUM_LEDS];
 
@@ -24,7 +24,7 @@ void setup() {
       // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-       FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+         FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   	  // FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
       // FastLED.addLeds<APA104, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
@@ -49,7 +49,7 @@ void setup() {
 }
 void fadeall() { 
   int dial = analogRead(POT);
-  int tail = map(dial, 0, 1023, 220, 250);
+  int tail = map(dial, 0, 1023, 240, 180);
   for(int i = 0; i < NUM_LEDS; i++) { 
 leds[i].nscale8(tail); 
 
@@ -58,9 +58,9 @@ void loop() {
   // Turn the LED on, then pause
 int dial = analogRead(POT);
 
-int tail = map(dial, 0, 1023, 0, 255);
+int tail = map(dial, 0, 1023, 0, 100);
 
-static uint8_t hue = 0;
+static uint8_t hue = 170;
 
 //FastLED.clear();
   
@@ -88,11 +88,11 @@ static uint8_t hue = 0;
 
   hue = hue + sub;
 
-  if(hue >= 64){
-    sub = -sub;
-  }
-  else if(hue <= 0){
-    sub = -sub;
+        if(hue >= 224){
+          sub = -sub;
+         }
+        else if(hue <= 165){
+         sub = -sub;
   }
   
   }
@@ -117,11 +117,11 @@ static uint8_t hue = 0;
 
   hue = hue + sub;
 
-  if(hue >= 64){
-    sub = -sub;
-  }
-  else if(hue <= 0){
-    sub = -sub;
+        if(hue >= 224){
+          sub = -sub;
+         }
+         else if(hue <= 165){
+           sub = -sub;
   }
 
   }
