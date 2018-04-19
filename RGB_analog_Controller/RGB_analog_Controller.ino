@@ -54,6 +54,13 @@ void loop() {
   int blueLevAn = analogRead(bluePot);
 
   //annnnnnnnnd let's convert them to PWM. ez pz
+  int redLev = map(redLevAn, 0, 1023, 0, 255);
+  int greenLev = map(redLevAn, 0, 1023, 0, 255);
+  int blueLev = map(redLevAn, 0, 1023, 0, 255);
+
+
+  /* The old code in case I need it. Learned about the map function too late and...well...here the fuck we are.
+   
   int redLev = redLevAn / 4;
   int greenLev = greenLevAn /4;
   int blueLev = blueLevAn / 4;
@@ -70,6 +77,8 @@ void loop() {
   if(blueLev < 5){
     blueLev = 0;
   }
+  
+  */
 
   //now we make that shit blast raw power directly to the LEDs because FUCK IT
   analogWrite(fetRed, redLev);

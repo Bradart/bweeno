@@ -1,0 +1,1 @@
+{"redirect": "https://www.reddit.com/"}
