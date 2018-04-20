@@ -55,14 +55,14 @@ void loop() {
 
   //annnnnnnnnd let's convert them to PWM. ez pz
   int redLev = map(redLevAn, 0, 1023, 0, 255);
-  int greenLev = map(redLevAn, 0, 1023, 0, 255);
-  int blueLev = map(redLevAn, 0, 1023, 0, 255);
+  int greenLev = map(greenLevAn, 0, 1023, 0, 255);
+  int blueLev = map(blueLevAn, 0, 1023, 0, 255);
 
 
-  /* The old code in case I need it. Learned about the map function too late and...well...here the fuck we are.
+  /* The old code in case I need it. Learned about the map function too late and...well...here the fuck we are. 
    
   int redLev = redLevAn / 4;
-  int greenLev = greenLevAn /4;
+  int greenLev = greenLevAn / 4;
   int blueLev = blueLevAn / 4;
 
   //compensating for the fact that 255 doesn't divide evenly into 1024
