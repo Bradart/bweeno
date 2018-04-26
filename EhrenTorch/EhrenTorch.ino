@@ -27,16 +27,17 @@ void fadeall() {
 
 void loop() {
 int  state = digitalRead(powerSwitch);
-  if(state = HIGH){
+hue = map(analogRead(huePot), 0, 1023, 255, 0);
+  if(state = LOW){
     for(int i = 0; i <= NUM_LEDS; i++){
-      hue = map(analogRead(huePot), 0, 1023, 255, 0);
       bright = map(analogRead(brightPot), 0, 1023, 255, 0);
       led[i] = CHSV(hue, 255, bright);
       FastLED.show();
+      hue = map(analogRead(huePot), 0, 1023, 255, 0);
     }
     
     }
-    else if(state == LOW){
+    else if(state == HIGH){
     FastLED.clear();
     }
   }
