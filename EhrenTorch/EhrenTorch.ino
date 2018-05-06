@@ -5,6 +5,8 @@ const int huePot = A1; //the potentiometer that control the color of the lights
 const int brightPot = A2; //the potentiometer that controls the brightness
 const int powerSwitch = 2; //the pin for the power button 
 
+int rainbow = 0;
+
 int hue = 0;
 int bright = 0; //the hue and brightness values we'll manipulate later
 CRGB led[NUM_LEDS]; //initialising the LED array
@@ -30,16 +32,32 @@ int  state = digitalRead(powerSwitch); //reads the power switch state so it know
   if(state == LOW){ //if the power button is on
     
     for(int i = 0; i <= NUM_LEDS; i++){ //set the LED values
+      
       bright = map(analogRead(brightPot), 0, 1023, 255, 0);
       hue = map(analogRead(huePot), 0, 1023, 255, 0);
       
-      if(hue >= 250){ //a white light mode for added brightness
-        led[i] = CHSV(255, 0, bright);
+      
+      if(bright >= 250){//a white light mode for added brightness
+        
+        led[i] = CHSV(255, 0, bright); 
+        
       }
+
+      else if(hue >= 245){
+        
+        led[i] = CHSV(rainbow, 255, bright);
+        FastLED.show();
+        rainbow++;
+        delay(15);
+        
+      }            
+      
       else{
         led[i] = CHSV(hue, 255, bright);
       }
+      
     }
+     
   }
   
   else if(state == HIGH){ //if the power button is off
@@ -47,8 +65,10 @@ int  state = digitalRead(powerSwitch); //reads the power switch state so it know
       led[i] = CHSV(hue, 0, 0); //turn the LEDs off
     }
   }
+  
     FastLED.show(); //keeping this outside of the for loops makes the transitions much smoother since all LEDs are intended to be the same color
-  }
+      
+}
 
   
 
