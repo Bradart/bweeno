@@ -15,18 +15,18 @@
       with this setup. 
   */
 
-const int redPot = A0;   //The pin for the potentiometer controlling the red level
-const int greenPot = A1; //Same for green
-const int bluePot = A2; //and for blue
+const int redPot = A1;   //The pin for the potentiometer controlling the red level
+const int greenPot = A2; //Same for green
+const int bluePot = A0; //and for blue
 
-const int fetRed = 2;   //pin for the digital PWM output pin for red
-const int fetGreen = 3; //same for green
-const int fetBlue = 4;  //same for blue
+const int fetRed = 3;   //pin for the digital PWM output pin for red
+const int fetGreen = 5; //same for green
+const int fetBlue = 6;  //same for blue
 
 //I'm adding indicators because what are you my dad step off old man I'm busy
-const int redInd = 5;
-const int greenInd = 6;
-const int blueInd = 7;
+//const int redInd = 5;
+//const int greenInd = 6;
+//const int blueInd = 7;
 
 
 
@@ -40,9 +40,9 @@ void setup() {
   pinMode(fetGreen, OUTPUT);
   pinMode(fetBlue, OUTPUT);
 
-  pinMode(redInd, OUTPUT);
-  pinMode(greenInd, OUTPUT);
-  pinMode(blueInd, OUTPUT);
+  //pinMode(redInd, OUTPUT);
+  //pinMode(greenInd, OUTPUT);
+  //pinMode(blueInd, OUTPUT);
 
   Serial.begin(9600);
 }
@@ -54,9 +54,19 @@ void loop() {
   int blueLevAn = analogRead(bluePot);
 
   //annnnnnnnnd let's convert them to PWM. ez pz
-  int redLev = map(redLevAn, 0, 1023, 0, 255);
-  int greenLev = map(greenLevAn, 0, 1023, 0, 255);
-  int blueLev = map(blueLevAn, 0, 1023, 0, 255);
+  int redLev = map(redLevAn, 0, 1023, 255, 0);
+  int greenLev = map(greenLevAn, 0, 1023, 255, 0);
+  int blueLev = map(blueLevAn, 0, 1023, 255, 0);
+
+  if(redLev < 5){
+    redLev = 0;
+  }
+  if(greenLev < 5){
+    greenLev = 0;
+  }
+  if(blueLev < 5){
+    blueLev = 0;
+  }
 
 
   /* The old code in case I need it. Learned about the map function too late and...well...here the fuck we are. 
@@ -86,9 +96,9 @@ void loop() {
   analogWrite(fetBlue, blueLev);  
 
   //the indicators operating on the same pwm as the controller mosfets
-  analogWrite(redInd, redLev);
-  analogWrite(greenInd, greenLev);
-  analogWrite(blueInd, blueLev);  
+  //analogWrite(redInd, redLev);
+  //analogWrite(greenInd, greenLev);
+  //analogWrite(blueInd, blueLev);  
 
   delay(50);
   
