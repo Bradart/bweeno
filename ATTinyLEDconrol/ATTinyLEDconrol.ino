@@ -20,7 +20,7 @@ void setup() {
   
 }
 
-bool cylOn() {
+void cylOn(bool *pP) {
   for(int i = 0; i <= NUM_LEDS; i++){
     byte hue = map(analogRead(potPin), 0, 1023, 0, 255);
     byte bright = map(analogRead(brightPin), 0, 1025, 0, 255);
@@ -29,8 +29,9 @@ bool cylOn() {
     FastLED.show();
     delay(20);
     if(!digitalRead(butPin)){
-      delay(100);
-      return false;
+      *pP = false;
+      delay(300);
+      return; 
     }
     }
   for(int i=NUM_LEDS; i > 0; i--){
@@ -41,67 +42,68 @@ bool cylOn() {
     FastLED.show();
     delay(20);
     if(!digitalRead(butPin)){
-      delay(100);
-      allOn = false;
-      return false;
+      *pP = false;
+      delay(300);
+      return;
     }
    }
-   allOn = false;
-   return true;
+   *pP = true;
 
 }
 
-bool lightOff(){
+void lightOff(bool *offP, bool *allOffP){
   for(int i = 0; i < NUM_LEDS; i++){
     led[i] = CHSV(0, 0, 0);
   }
   FastLED.show();
-  return false;
+  *offP = false;
+  *allOffP = false;
 }
 
-bool lightOn(){
+void lightOn(bool *allOnP){
   for(int i = 0; i < NUM_LEDS; i++){
     byte hue = map(analogRead(potPin), 0, 1023, 0, 255);
     byte bright = map(analogRead(brightPin), 0, 1025, 0, 255);
     if(!digitalRead(onPin)){
-      delay(100);
-      return false;
+      *allOnP = false;
+      delay(300);
+      return;
     }
     led[i] = CHSV(hue, 255, bright);
   }
   FastLED.show();
-  return true;
+  *allOnP = true;
 }
 
 void fadeall() { 
   for(int i = 0; i < NUM_LEDS; i++) { 
-    led[i].nscale8(180); 
+    led[i].nscale8(200); 
   }
 }
 
 
 void loop() {
   while(!power && !allOn){
-    power = lightOff();
+  lightOff(&power, &allOn);
     but = digitalRead(butPin);
     but2 = digitalRead(onPin);
     if(!but){
-      delay(100);
+      delay(300);
       power = !power;
       break;
     }
     else if(!but2){
-      delay(100);
+      delay(300);
       allOn = !allOn; 
       break;
     }
   }
   while(allOn && !power){
-    allOn = lightOn();
+    lightOn(&allOn);
     break;
     }
   while(power){
-    power = cylOn();
+    cylOn(&power);
     break;
     }
   }
