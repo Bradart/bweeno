@@ -52,7 +52,7 @@ void loop() {
     lightsOn();
   }
   else if(powStat && rainStat){
-    rainbow(&powStat);
+    rainbow(&powStat, &rainStat);
   }
 
   
@@ -61,7 +61,7 @@ void loop() {
   }
 }
 
-void rainbow(bool *pows) { //a slow-progressing rainbow
+void rainbow(bool *pows, bool *rains) { //a slow-progressing rainbow
   hue = lastHue;
   for (int i = 0; i < NUM_LEDS; i++) {
     led[i] = CHSV(hue, 255, 255);
@@ -79,8 +79,11 @@ void rainbow(bool *pows) { //a slow-progressing rainbow
   FastLED.delay(30);
 
   lastHue+=3;
-  //delay(500);
+  if(lastHue > 252){
+    lastHue = 0;
+  }
   *pows = true;
+  *rains = true;
   return;
 }
 
