@@ -33,7 +33,7 @@ void setup() {
 void loop() {
   butStat = digitalRead(powPin);
   satSet = analogRead(satPot);
-  if(satSet <= 5){
+  if(satSet <= 10){
     rainStat = true;
   }
   
@@ -56,7 +56,7 @@ void loop() {
   }
 
   
-  if(!powStat && !rainStat){
+  if(!powStat){
     lightsOff();
   }
 }
